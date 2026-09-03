@@ -1,0 +1,2 @@
+export function notFound(req,res){res.status(404).json({success:false,message:`Route ${req.method} ${req.originalUrl} not found`,errors:[]})}
+export function errorHandler(error,req,res,next){if(res.headersSent)return next(error);if(process.env.NODE_ENV!=='test')console.error(error);const status=error.status||(/Unique constraint/.test(error.message)?409:500);res.status(status).json({success:false,message:status===500?'Internal server error':error.message,errors:error.errors||[]})}
